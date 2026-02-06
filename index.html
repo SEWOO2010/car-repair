@@ -190,7 +190,6 @@ function checkDurability(input) {
     msg.innerText = "";
   }
 }
-</script>
 
 function calc() {
   const price = { f:60000, r:56000, c:152000, e:528000, p:428000 };
@@ -203,6 +202,7 @@ function calc() {
 
   result.innerText = total.toLocaleString() + "원";
 }
+
 function reset() {
   ["f","r","c","e","p"].forEach(id => document.getElementById(id).value = 0);
   result.innerText = "0원";
@@ -211,4 +211,5 @@ function reset() {
 
 </body>
 </html>
+
 
