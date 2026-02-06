@@ -8,7 +8,6 @@
 :root {
   --main: #1f4fd8;
   --gray: #e5e7eb;
-  --dark: #111827;
 }
 body {
   font-family: "Pretendard", Arial, sans-serif;
@@ -199,14 +198,15 @@ function checkDurability(input) {
   const msg = document.getElementById("durabilityMsg");
   const value = Number(input.value);
 
-  if (value < 10) {  // 10 미만
+  if (value >= 0 && value < 10) {
     msg.innerText = "해당 내구도는 교체가 필요합니다.";
-    input.value = 10; // 자동 10으로 변경
-  } else if (value === 10) { // 10
-    msg.innerText = "최대 내구도입니다.";
-    setTimeout(() => { msg.innerText = ""; }, 5000);
-  } else { // 10 초과
-    msg.innerText = ""; // 아무 메시지 없음
+    // 5초 동안 메시지 유지 후 값 10으로 변경
+    setTimeout(() => {
+      input.value = 10;
+      msg.innerText = "";
+    }, 5000);
+  } else {
+    msg.innerText = ""; // 10 이상 입력 시 아무 메시지 없음
   }
 }
 
@@ -224,8 +224,8 @@ function calc() {
 
 function reset() {
   ["f","r","c","e","p"].forEach(id => document.getElementById(id).value = 0);
-  result.innerText = "0원";
   document.getElementById("durabilityMsg").innerText = "";
+  result.innerText = "0원";
 }
 </script>
 
