@@ -175,7 +175,7 @@ button:hover {
 <table>
 <tr>
 <td>
-<input type="number" value="10" onblur="checkDurability(this)" min="0" max="10">
+<input type="number" value="10" onblur="checkDurability(this)" min="0">
 <div id="durabilityMsg" class="warning"></div>
 </td>
 </tr>
@@ -199,14 +199,14 @@ function checkDurability(input) {
   const msg = document.getElementById("durabilityMsg");
   const value = Number(input.value);
 
-  if (value <= 0) {
+  if (value < 10) {  // 10 미만
     msg.innerText = "해당 내구도는 교체가 필요합니다.";
-    input.value = 10; // 0이면 자동 10으로 변경
-  } else if (value === 10) {
+    input.value = 10; // 자동 10으로 변경
+  } else if (value === 10) { // 10
     msg.innerText = "최대 내구도입니다.";
-    setTimeout(() => { msg.innerText = ""; }, 5000); // 5초 후 제거
-  } else {
-    msg.innerText = ""; // 1~9 사이면 메시지 제거
+    setTimeout(() => { msg.innerText = ""; }, 5000);
+  } else { // 10 초과
+    msg.innerText = ""; // 아무 메시지 없음
   }
 }
 
