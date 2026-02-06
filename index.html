@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>차량 수리비 계산기</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      padding: 20px;
+    }
+    .box {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    h1 {
+      text-align: center;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h1>🚗 차량 수리비 계산기</h1>
+
+    <input type="number" id="labor" placeholder="공임비 (원)">
+    <input type="number" id="parts" placeholder="부품비 (원)">
+
+    <select id="insurance">
+      <option value="1">보험 미적용</option>
+      <option value="0.2">보험 적용 (본인부담 20%)</option>
+      <option value="0.3">보험 적용 (본인부담 30%)</option>
+    </select>
+
+    <button onclick="calc()">계산하기</button>
+
+    <div class="result" id="result">결과가 여기 표시됩니다</div>
+  </div>
+
+  <script>
+    function calc() {
+      const labor = Number(document.getElementById("labor").value) || 0;
+      const parts = Number(document.getElementById("parts").value) || 0;
+      const rate = Number(document.getElementById("insurance").value);
+
+      const total = labor + parts;
+      const pay = total * rate;
+
+      document.getElementById("result").innerText =
+        "총 수리비: " + total.toLocaleString() + "원\n" +
+        "본인 부담금: " + pay.toLocaleString() + "원";
+    }
+  </script>
+
+</body>
+</html>
