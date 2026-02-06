@@ -1,76 +1,201 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>차량 수리비 계산기</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      padding: 20px;
-    }
-    .box {
-      max-width: 400px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-    }
-    h1 {
-      text-align: center;
-    }
-    input, select, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      font-size: 16px;
-    }
-    button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 6px;
-    }
-    .result {
-      margin-top: 15px;
-      font-weight: bold;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>정비 서비스 자동 수리 계산기</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+:root {
+  --main: #1f4fd8;
+  --gray: #e5e7eb;
+  --dark: #111827;
+}
+body {
+  font-family: "Pretendard", Arial, sans-serif;
+  background: #f3f4f6;
+  margin: 0;
+  padding: 20px;
+}
+.wrapper {
+  max-width: 1200px;
+  margin: auto;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  padding: 24px;
+}
+.title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  padding: 16px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--main), #3b82f6);
+  color: white;
+  margin-bottom: 24px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 24px;
+}
+.card {
+  border-radius: 12px;
+  border: 1px solid var(--gray);
+  overflow: hidden;
+}
+.card h3 {
+  margin: 0;
+  padding: 12px;
+  background: #f9fafb;
+  border-bottom: 1px solid var(--gray);
+  text-align: center;
+  font-weight: 700;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+td, th {
+  border-bottom: 1px solid var(--gray);
+  padding: 10px;
+  text-align: center;
+}
+th {
+  background: #f3f4f6;
+}
+select, input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--gray);
+  text-align: center;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--main);
+}
+.total-box {
+  background: #f9fafb;
+  padding: 16px;
+  text-align: right;
+  font-size: 22px;
+  font-weight: 800;
+}
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px;
+}
+button {
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.calc {
+  background: var(--main);
+  color: white;
+}
+.reset {
+  background: #9ca3af;
+  color: white;
+}
+button:hover {
+  opacity: 0.9;
+}
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
 </head>
 <body>
 
-  <div class="box">
-    <h1>🚗 차량 수리비 계산기</h1>
+<div class="wrapper">
 
-    <input type="number" id="labor" placeholder="공임비 (원)">
-    <input type="number" id="parts" placeholder="부품비 (원)">
+<div class="title">동탄정비서비스 자동 수리 계산기</div>
 
-    <select id="insurance">
-      <option value="1">보험 미적용</option>
-      <option value="0.2">보험 적용 (본인부담 20%)</option>
-      <option value="0.3">보험 적용 (본인부담 30%)</option>
-    </select>
+<div class="grid">
 
-    <button onclick="calc()">계산하기</button>
+<!-- 좌측 -->
+<div class="card">
+<h3>차량 선택</h3>
+<table>
+<tr>
+<td>차량</td>
+<td>
+<select>
+<option>선택</option>
+<option>2020 Hyundai Staria (Police Escort)</option>
+</select>
+</td>
+</tr>
+</table>
 
-    <div class="result" id="result">결과가 여기 표시됩니다</div>
-  </div>
+<h3>부품 단가</h3>
+<table>
+<tr><td>전방 범퍼</td><td>60,000원</td></tr>
+<tr><td>후방 범퍼</td><td>56,000원</td></tr>
+<tr><td>센터</td><td>152,000원</td></tr>
+<tr><td>엔진</td><td>528,000원</td></tr>
+<tr><td>프레임</td><td>428,000원</td></tr>
+</table>
+</div>
 
-  <script>
-    function calc() {
-      const labor = Number(document.getElementById("labor").value) || 0;
-      const parts = Number(document.getElementById("parts").value) || 0;
-      const rate = Number(document.getElementById("insurance").value);
+<!-- 우측 -->
+<div class="card">
+<h3>수리 횟수 입력</h3>
+<table>
+<tr>
+<th>전방 범퍼</th>
+<th>후방 범퍼</th>
+<th>센터</th>
+<th>엔진</th>
+<th>프레임</th>
+</tr>
+<tr>
+<td><input type="number" id="f" value="0"></td>
+<td><input type="number" id="r" value="0"></td>
+<td><input type="number" id="c" value="0"></td>
+<td><input type="number" id="e" value="0"></td>
+<td><input type="number" id="p" value="0"></td>
+</tr>
+</table>
 
-      const total = labor + parts;
-      const pay = total * rate;
+<div class="total-box">
+총액: <span id="result">0원</span>
+</div>
 
-      document.getElementById("result").innerText =
-        "총 수리비: " + total.toLocaleString() + "원\n" +
-        "본인 부담금: " + pay.toLocaleString() + "원";
-    }
-  </script>
+<div class="buttons">
+<button class="reset" onclick="reset()">초기화</button>
+<button class="calc" onclick="calc()">계산</button>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+function calc() {
+  const price = { f:60000, r:56000, c:152000, e:528000, p:428000 };
+  const total =
+    f.value * price.f +
+    r.value * price.r +
+    c.value * price.c +
+    e.value * price.e +
+    p.value * price.p;
+
+  result.innerText = total.toLocaleString() + "원";
+}
+function reset() {
+  ["f","r","c","e","p"].forEach(id => document.getElementById(id).value = 0);
+  result.innerText = "0원";
+}
+</script>
 
 </body>
 </html>
