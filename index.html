@@ -162,11 +162,11 @@ button:hover {
 <th>프레임</th>
 </tr>
 <tr>
-<td><input type="number" id="f" value="0"></td>
-<td><input type="number" id="r" value="0"></td>
-<td><input type="number" id="c" value="0"></td>
-<td><input type="number" id="e" value="0"></td>
-<td><input type="number" id="p" value="0"></td>
+<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
+<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
+<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
+<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
+<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
 </tr>
 </table>
 
@@ -198,36 +198,35 @@ function checkDurability(input) {
   const msg = document.getElementById("durabilityMsg");
   const value = Number(input.value);
 
+  // 0~9 입력 시 메시지 표시 후 5초 뒤 값 10으로 변경
   if (value >= 0 && value < 10) {
     msg.innerText = "해당 내구도는 교체가 필요합니다.";
-    // 5초 후 메시지 사라짐 + 값 10으로 변경
     setTimeout(() => {
       input.value = 10;
       msg.innerText = "";
     }, 5000);
   } else {
-    msg.innerText = ""; // 10 이상 입력 시 메시지 없음
+    // 10 이상 입력 시 메시지 없음
+    msg.innerText = "";
   }
 }
 
 function calc() {
   const price = { f:60000, r:56000, c:152000, e:528000, p:428000 };
   const total =
-    f.value * price.f +
-    r.value * price.r +
-    c.value * price.c +
-    e.value * price.e +
-    p.value * price.p;
+    document.querySelectorAll('input[type="number"]')[0].value * price.f +
+    document.querySelectorAll('input[type="number"]')[1].value * price.r +
+    document.querySelectorAll('input[type="number"]')[2].value * price.c +
+    document.querySelectorAll('input[type="number"]')[3].value * price.e +
+    document.querySelectorAll('input[type="number"]')[4].value * price.p;
 
-  result.innerText = total.toLocaleString() + "원";
+  document.getElementById("result").innerText = Number(total).toLocaleString() + "원";
 }
 
 function reset() {
-  ["f","r","c","e","p"].forEach(id => document.getElementById(id).value = 0);
-  const durabilityInput = document.querySelector('input[placeholder="내구도 입력"]');
-  durabilityInput.value = "";
+  document.querySelectorAll('input[type="number"]').forEach(input => input.value = "");
   document.getElementById("durabilityMsg").innerText = "";
-  result.innerText = "0원";
+  document.getElementById("result").innerText = "0원";
 }
 </script>
 
