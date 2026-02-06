@@ -139,7 +139,6 @@ button:hover {
 </td>
 </tr>
 </table>
-
 <h3>부품 단가</h3>
 <table>
 <tr><td>전방 범퍼</td><td>60,000원</td></tr>
@@ -185,10 +184,7 @@ button:hover {
 </tr>
 </table>
 
-<!-- 내구도 입력창 삭제 후 로고 삽입 -->
-<div style="text-align:center; margin-top:20px;">
-  <img src="logo.png" alt="로고" style="max-width:200px;">
-</div>
+<!-- 내구도 입력창 삭제 -->
 
 <div class="total-box">
 총액: <span id="result">0원</span>
@@ -205,21 +201,4 @@ button:hover {
 
 <script>
 function checkDurability(input) {
-  const msg = input.nextElementSibling; // 각 input 아래 경고창
-  const value = Number(input.value);
-
-  if (value >= 0 && value < 10) {
-    msg.innerText = "해당 내구도는 교체가 필요합니다.";
-    setTimeout(() => {
-      input.value = 10;
-      msg.innerText = "";
-    }, 5000);
-  } else {
-    msg.innerText = "";
-  }
-}
-
-function calc() {
-  const price = { f:60000, r:56000, c:152000, e:528000, p:428000 };
-  const total =
-    document.
+  const msg = input.next
