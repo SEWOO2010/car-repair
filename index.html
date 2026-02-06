@@ -111,6 +111,11 @@ button:hover {
     grid-template-columns: 1fr;
   }
 }
+.warning {
+  color: red;
+  font-size: 14px;
+  margin-top: 6px;
+}
 </style>
 </head>
 <body>
@@ -166,6 +171,16 @@ button:hover {
 </tr>
 </table>
 
+<h3>내구도 입력</h3>
+<table>
+<tr>
+<td>
+<input type="number" value="10" oninput="checkDurability(this)">
+<div id="durabilityMsg" class="warning"></div>
+</td>
+</tr>
+</table>
+
 <div class="total-box">
 총액: <span id="result">0원</span>
 </div>
@@ -185,7 +200,7 @@ function checkDurability(input) {
 
   if (input.value !== "" && Number(input.value) <= 9) {
     msg.innerText = "해당 내구도는 교체가 필요합니다.";
-    input.value = 10; // 값 자동 변경
+    input.value = 10;
   } else {
     msg.innerText = "";
   }
@@ -206,10 +221,9 @@ function calc() {
 function reset() {
   ["f","r","c","e","p"].forEach(id => document.getElementById(id).value = 0);
   result.innerText = "0원";
+  document.getElementById("durabilityMsg").innerText = "";
 }
 </script>
 
 </body>
 </html>
-
-
