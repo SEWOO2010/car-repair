@@ -1,3 +1,5 @@
+
+나의 말:
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -139,6 +141,7 @@ button:hover {
 </td>
 </tr>
 </table>
+
 <h3>부품 단가</h3>
 <table>
 <tr><td>전방 범퍼</td><td>60,000원</td></tr>
@@ -161,30 +164,23 @@ button:hover {
 <th>프레임</th>
 </tr>
 <tr>
-<td>
-  <input type="number" value="" onblur="checkDurability(this)" min="0">
-  <div class="warning"></div>
-</td>
-<td>
-  <input type="number" value="" onblur="checkDurability(this)" min="0">
-  <div class="warning"></div>
-</td>
-<td>
-  <input type="number" value="" onblur="checkDurability(this)" min="0">
-  <div class="warning"></div>
-</td>
-<td>
-  <input type="number" value="" onblur="checkDurability(this)" min="0">
-  <div class="warning"></div>
-</td>
-<td>
-  <input type="number" value="" onblur="checkDurability(this)" min="0">
-  <div class="warning"></div>
-</td>
+<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
+<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
+<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
+<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
+<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
 </tr>
 </table>
 
-<!-- 내구도 입력창 삭제 -->
+<h3>내구도 입력</h3>
+<table>
+<tr>
+<td>
+<input type="number" placeholder="내구도 입력" onblur="checkDurability(this)" min="0">
+<div id="durabilityMsg" class="warning"></div>
+</td>
+</tr>
+</table>
 
 <div class="total-box">
 총액: <span id="result">0원</span>
@@ -201,4 +197,39 @@ button:hover {
 
 <script>
 function checkDurability(input) {
-  const msg = input.next
+  const msg = document.getElementById("durabilityMsg");
+  const value = Number(input.value);
+
+  // 0~9 입력 시 메시지 표시 후 5초 뒤 값 10으로 변경
+  if (value >= 0 && value < 10) {
+    msg.innerText = "해당 내구도는 교체가 필요합니다.";
+    setTimeout(() => {
+      input.value = 10;
+      msg.innerText = "";
+    }, 5000);
+  } else {
+    // 10 이상 입력 시 메시지 없음
+    msg.innerText = "";
+  }
+}
+
+function calc() {
+  const price = { f:60000, r:56000, c:152000, e:528000, p:428000 };
+  const total =
+    document.querySelectorAll('input[type="number"]')[0].value * price.f +
+    document.querySelectorAll('input[type="number"]')[1].value * price.r +
+    document.querySelectorAll('input[type="number"]')[2].value * price.c +
+    document.querySelectorAll('input[type="number"]')[3].value * price.e +
+    document.querySelectorAll('input[type="number"]')[4].value * price.p;
+
+  document.getElementById("result").innerText = Number(total).toLocaleString() + "원";
+}
+
+function reset() {
+  document.querySelectorAll('input[type="number"]').forEach(input => input.value = "");
+  document.getElementById("durabilityMsg").innerText = "";
+  document.getElementById("result").innerText = "0원";
+}
+</script>
+
+</body>
