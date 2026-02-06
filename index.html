@@ -112,7 +112,7 @@ button:hover {
 }
 .warning {
   color: red;
-  font-size: 22px; /* 메시지 크기 키움 */
+  font-size: 22px;
   font-weight: 800;
   text-align: center;
   margin: 10px 0;
@@ -164,11 +164,21 @@ button:hover {
 <th>프레임</th>
 </tr>
 <tr>
-<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
-<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
-<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
-<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
-<td><input type="number" value="" onblur="checkDurability(this)" min="0"></td>
+<td>
+  <input type="number" value="" min="0" onblur="checkDurability(this)">
+</td>
+<td>
+  <input type="number" value="" min="0" onblur="checkDurability(this)">
+</td>
+<td>
+  <input type="number" value="" min="0" onblur="checkDurability(this)">
+</td>
+<td>
+  <input type="number" value="" min="0" onblur="checkDurability(this)">
+</td>
+<td>
+  <input type="number" value="" min="0" onblur="checkDurability(this)">
+</td>
 </tr>
 </table>
 
@@ -188,14 +198,17 @@ button:hover {
 </div>
 
 <script>
+let durabilityTimeout;
+
 function checkDurability(input) {
   const msg = document.getElementById("durabilityMsg");
   const value = Number(input.value);
 
-  // 0~9 입력 시 메시지 표시 후 5초 뒤 값 10으로 변경
+  clearTimeout(durabilityTimeout); // 이전 타이머 초기화
+
   if (value >= 0 && value < 10) {
     msg.innerText = "해당 내구도는 교체가 필요합니다.";
-    setTimeout(() => {
+    durabilityTimeout = setTimeout(() => {
       input.value = 10;
       msg.innerText = "";
     }, 5000);
@@ -208,11 +221,11 @@ function calc() {
   const price = { f:60000, r:56000, c:152000, e:528000, p:428000 };
   const inputs = document.querySelectorAll('input[type="number"]');
   const total =
-    Number(inputs[0].value) * price.f +
-    Number(inputs[1].value) * price.r +
-    Number(inputs[2].value) * price.c +
-    Number(inputs[3].value) * price.e +
-    Number(inputs[4].value) * price.p;
+    Number(inputs[0].value || 0) * price.f +
+    Number(inputs[1].value || 0) * price.r +
+    Number(inputs[2].value || 0) * price.c +
+    Number(inputs[3].value || 0) * price.e +
+    Number(inputs[4].value || 0) * price.p;
 
   document.getElementById("result").innerText = total.toLocaleString() + "원";
 }
