@@ -187,7 +187,7 @@ button:hover {
 
 <!-- 내구도 입력창 삭제 후 로고 삽입 -->
 <div style="text-align:center; margin-top:20px;">
-  <img src="./images/logo.png" alt="로고" style="max-width:200px;">
+  <img src="logo.png" alt="로고" style="max-width:200px;">
 </div>
 
 <div class="total-box">
@@ -222,21 +222,4 @@ function checkDurability(input) {
 function calc() {
   const price = { f:60000, r:56000, c:152000, e:528000, p:428000 };
   const total =
-    document.querySelectorAll('input[type="number"]')[0].value * price.f +
-    document.querySelectorAll('input[type="number"]')[1].value * price.r +
-    document.querySelectorAll('input[type="number"]')[2].value * price.c +
-    document.querySelectorAll('input[type="number"]')[3].value * price.e +
-    document.querySelectorAll('input[type="number"]')[4].value * price.p;
-
-  document.getElementById("result").innerText = Number(total).toLocaleString() + "원";
-}
-
-function reset() {
-  document.querySelectorAll('input[type="number"]').forEach(input => input.value = "");
-  document.querySelectorAll('.warning').forEach(msg => msg.innerText = "");
-  document.getElementById("result").innerText = "0원";
-}
-</script>
-
-</body>
-</html>
+    document.
